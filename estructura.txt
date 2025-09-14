@@ -1,0 +1,62 @@
+Ra¡z 
+.babelrc
+.gitignore
+eslint.config.mjs
+estructura.txt
+package.json
+README.md
+webpack.config.js
+  
+build 
+Listado de rutas de carpetas para el volumen SYSTEM
+El n£mero de serie del volumen es 000000D1 1CED:DB3B
+C:\USERS\SISTEMA\BLOGSLIST_APP\FRONTEND\BUILD
+    index.html
+    main.js
+    main.js.LICENSE.txt
+    main.js.map
+    
+No existe ninguna subcarpeta 
+
+  
+src 
+Listado de rutas de carpetas para el volumen SYSTEM
+El n£mero de serie del volumen es 00000084 1CED:DB3B
+C:\USERS\SISTEMA\BLOGSLIST_APP\FRONTEND\SRC
+|   App.js
+|   index.css
+|   index.js
+|   
++---componentes
+|   +---Blogs
+|   |       Blog.jsx
+|   |       Blog.test.js
+|   |       BlogForm.jsx
+|   |       BlogForm.test.js
+|   |       BlogLista.jsx
+|   |       BuscarBlog.jsx
+|   |       
+|   +---Login
+|   |       LoginForm.jsx
+|   |       
+|   \---Rutas
+|           Notificacion.jsx
+|           Togglable.jsx
+|           Togglable.test.js
+|           
++---hooks
+|       useCampo.js
+|       
+\---servicios
+        blogServicio.js
+        login.js
+        storage.js
+        
+  
+.vscode 
+Listado de rutas de carpetas para el volumen SYSTEM
+El n£mero de serie del volumen es 00000087 1CED:DB3B
+C:\USERS\SISTEMA\BLOGSLIST_APP\FRONTEND\.VSCODE
+Ruta de acceso no v lida: \USERS\SISTEMA\BLOGSLIST_APP\FRONTEND\.VSCODE
+No existe ninguna subcarpeta 
+
