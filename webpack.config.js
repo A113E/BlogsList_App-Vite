@@ -5,7 +5,7 @@ const config = (env, argv) => {
   console.log('argv.mode:', argv.mode)
 
   const backend_url = argv.mode === 'production'
-    ? 'https://fullstackopen-blogslist.onrender.com/api'
+    ? 'https://blogslist-app-webpack.onrender.com/api'
     : 'http://localhost:3003/api'
 
   return {

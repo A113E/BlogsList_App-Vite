@@ -28,17 +28,17 @@ const BlogForm = ({ crearBlog }) => {
   }
 
   return (
-    <div>
+    <div className='formDiv'>
       <h2>Añadir Blog</h2>
       <form onSubmit={añadirBlog}>
                 Título:
-        <input {...titulo.inputProps} />
+        <input {...titulo.inputProps} id='titulo-input'/>
         <br />
                 Autor:
-        <input {...autor.inputProps} />
+        <input {...autor.inputProps} id='autor-input'/>
         <br />
                 Url:
-        <input {...url.inputProps} />
+        <input {...url.inputProps} id='url-input'/>
         <br />
         <button type='submit'>Añadir</button>
         <button type='button' onClick={limpiarFormulario}>Limpiar</button>
