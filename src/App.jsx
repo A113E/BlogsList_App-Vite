@@ -10,7 +10,7 @@ import LoginForm from './componentes/Login/LoginForm'
 import Togglable from './componentes/Rutas/Togglable'
 
 // Importar los servicios
-import { obtenerBlogs, like, crear, eliminar} from './servicios/blogServicio'
+import { obtenerBlogs, like, crear, eliminar } from './servicios/blogServicio'
 import { login } from './servicios/login.js'
 import { cargarUsuario, eliminarUsuario, usuarioGuardado } from './servicios/storage.js'
 
