@@ -2,15 +2,15 @@ import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 
 // Importar los componentes
-import BlogForm from './componentes/Blogs/BlogForm.jsx'
-import BlogLista from './componentes/Blogs/BlogLista.jsx'
-import BuscarBlog from './componentes/Blogs/BuscarBlog.jsx'
-import Notificacion from './componentes/Rutas/Notificacion.jsx'
-import LoginForm from './componentes/Login/LoginForm.jsx'
-import Togglable from './componentes/Rutas/Togglable.jsx'
+import BlogForm from './componentes/Blogs/BlogForm'
+import BlogLista from './componentes/Blogs/BlogLista'
+import BuscarBlog from './componentes/Blogs/BuscarBlog'
+import Notificacion from './componentes/Rutas/Notificacion'
+import LoginForm from './componentes/Login/LoginForm'
+import Togglable from './componentes/Rutas/Togglable'
 
 // Importar los servicios
-import { obtenerBlogs, like, crear, eliminar, setToken } from './servicios/blogServicio'
+import { obtenerBlogs, like, crear, eliminar} from './servicios/blogServicio'
 import { login } from './servicios/login.js'
 import { cargarUsuario, eliminarUsuario, usuarioGuardado } from './servicios/storage.js'
 

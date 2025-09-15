@@ -1,5 +1,5 @@
 import React from 'react'
-import Blog from './Blog.jsx'
+import Blog from './Blog'
 
 const BlogLista = ({ blogs, manejadorLikesChange, onDelete }) => (
   <div>

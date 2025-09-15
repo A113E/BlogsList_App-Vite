@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { cargarUsuario } from './storage'
+import { BACKEND_URL } from '../config'
+
 const baseUrl = `${BACKEND_URL}/blogs`
 
 // Autentificacion
