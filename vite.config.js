@@ -13,8 +13,8 @@ export default defineConfig(({ mode }) => {
     : 'http://localhost:3003/api'
 
     return {
+        plugins: [react()],
         server: {
-            plugins: [react()],
             port: 3000,
             // Proxy para evitar CORS en dev
             proxy: {
@@ -30,7 +30,14 @@ export default defineConfig(({ mode }) => {
             sourcemap: true,
             rollupOptions: {
                 input: path.resolve(__dirname, 'index.html')
-            }
-        }
-    }
+            },
+        },
+        optimizeDeps: {
+      esbuildOptions: {
+        loader: {
+          '.js': 'jsx', // Forzar que los .js se lean como JSX
+        },
+      },
+    },
+  }
 })
