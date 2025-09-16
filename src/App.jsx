@@ -1,4 +1,4 @@
-import React from 'react'
+// Hooks
 import { useState, useEffect, useRef } from 'react'
 
 // Importar los componentes

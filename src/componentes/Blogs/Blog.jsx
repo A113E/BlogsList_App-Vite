@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState } from 'react'
 import { yo } from '../../servicios/storage'
 import PropTypes from 'prop-types'
@@ -21,7 +20,7 @@ const Blog = ({ blog, manejadorLikesChange, onDelete }) => {
         </button>
       </div>
       <div>
-        <strong>Título:</strong> {blog.titulo} <br />
+        <h3> {blog.titulo} </h3> <br />
         <strong>Autor:</strong> {blog.autor}
       </div>
       {mostrar && (

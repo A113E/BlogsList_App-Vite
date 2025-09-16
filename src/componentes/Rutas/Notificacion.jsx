@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Notificacion = ({ mensaje, tipo }) => {
   if (!mensaje) return null // Solo muestra la notificacion si hay mensaje
   // Estilo para las notificaciones
@@ -13,7 +11,7 @@ const Notificacion = ({ mensaje, tipo }) => {
     marginBottom: '10px'
   }
 
-  return <div style={estiloNotificacion}> {mensaje} </div>
+  return <div style={estiloNotificacion} className={`divMensaje ${tipo}`}> {mensaje} </div>
 }
 
 export default Notificacion

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useCampo } from '../../hooks/useCampo'
 import PropTypes from 'prop-types'
 
@@ -24,18 +23,18 @@ const LoginForm = ({ usuarioLogged }) => {
   }
 
   return (
-    <div>
+    <div className='login-form'>
       <h2>Iniciar Sesión</h2>
       <form onSubmit={loginUsuario}>
         <div>
                 Nombre de usuario:
-          <input {...nombre_usuario.inputProps} />
+          <input {...nombre_usuario.inputProps} id='nombre-input'/>
         </div>
         <div>
                 Contraseña:
-          <input {...password.inputProps} />
+          <input {...password.inputProps} id='password-input'/>
         </div>
-        <button type='submit'>Iniciar Sesión</button>
+        <button type='submit'>Entrar</button>
       </form>
     </div>
   )

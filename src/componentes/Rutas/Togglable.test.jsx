@@ -1,5 +1,3 @@
-import React from 'react'
-import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Togglable from './Togglable.jsx'
@@ -32,7 +30,10 @@ describe('<Togglable />', () => {
   test('los props children se muestran al dar click en el boton', async () => {
     const usuario = userEvent.setup()
     const boton = screen.getByText('show...')
+    screen.debug(boton)
     await usuario.click(boton)
+
+    screen.debug()
 
     // Comprueba que se muestre los props children
     const div = container.querySelector('.togglableContent')
@@ -43,10 +44,14 @@ describe('<Togglable />', () => {
   test('los props children se ocultan al dar click en el boton cancelar', async () => {
     const usuario = userEvent.setup()
     const boton = screen.getByText('show...')
+    screen.debug(boton)
     await usuario.click(boton)
 
     const cerrarBtn = screen.getByText('Cancelar')
+    screen.debug(cerrarBtn)
     await usuario.click(cerrarBtn)
+
+    screen.debug()
 
     // Comprueba que oculte los props children
     const div = container.querySelector('.togglableContent')

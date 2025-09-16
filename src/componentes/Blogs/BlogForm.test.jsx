@@ -1,12 +1,10 @@
-import React from 'react'
-import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import BlogForm from './BlogForm.jsx'
 import userEvent from '@testing-library/user-event'
 
 // Prueba que verifica que el formulario llame al controlador de eventos cuando se crea un blog
 test('el formulario llama al controlador de eventos cuando se crea un blog con los detalles correctos', async () => {
-  const crearBlog = jest.fn() // Controlador de eventos
+  const crearBlog = vi.fn() // Controlador de eventos
   const usuario = userEvent.setup() // Usuario
   const { container } = render(<BlogForm crearBlog={crearBlog} />) // Renderizar el componente
 
@@ -17,7 +15,7 @@ test('el formulario llama al controlador de eventos cuando se crea un blog con l
 
   const añadirBtn = screen.getByText('Añadir')
 
-  screen.debug() // Mostrar el html en la consola
+  screen.debug(añadirBtn) // Mostrar el html en la consola
 
   // Simula la escritura de texto
   await usuario.type(inputTitulo, 'Probando el formulario...')
@@ -26,17 +24,22 @@ test('el formulario llama al controlador de eventos cuando se crea un blog con l
 
   await usuario.click(añadirBtn)
 
+  screen.debug()
+
   // Comprobamos que el controlador fue llamado una vez
   expect(crearBlog.mock.calls).toHaveLength(1)
   // Comprueba que cada linea sea correcta
-  expect(crearBlog.mock.calls[0][0].titulo).toBe('Probando el formulario...')
-  expect(crearBlog.mock.calls[0][0].autor).toBe('Test...')
-  expect(crearBlog.mock.calls[0][0].url).toBe('www.test...')
+  expect(crearBlog).toHaveBeenCalledWith({
+    titulo: 'Probando el formulario...',
+    autor: 'Test...',
+    url: 'www.test...',
+    likes: 0
+  })
 })
 
 // Prueba que verifica que el formulario llame al controlador de eventos al limpiar los campos (inputs)
 test('el formulario llama al controlador de eventos cuando se limpian los campos', async () => {
-  const limpiarFormulario = jest.fn() // lo pasamos por si el componente lo espera
+  const limpiarFormulario = vi.fn() // lo pasamos por si el componente lo espera
   const user = userEvent.setup()
   const { container } = render(<BlogForm limpiarFormulario={limpiarFormulario} />)
 
@@ -47,13 +50,15 @@ test('el formulario llama al controlador de eventos cuando se limpian los campos
 
   const limpiarBtn = screen.getByText('Limpiar')
 
-  screen.debug() // Mostrar el html en la consola
+  screen.debug(limpiarBtn) // Mostrar el html en la consola
 
   await user.type(inputTitulo, 'Probando limpiar el formulario...')
   await user.type(inputAutor, 'Test...')
   await user.type(inputUrl, 'www.test...')
 
   await user.click(limpiarBtn)
+
+  screen.debug()
 
   // Verificamos que los inputs quedaron vacíos
   expect(inputTitulo).toHaveValue('')

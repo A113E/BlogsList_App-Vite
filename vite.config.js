@@ -1,4 +1,4 @@
-// vite.config
+// vite.config.js
 // Modulos
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -38,6 +38,12 @@ export default defineConfig(({ mode }) => {
           '.js': 'jsx', // Forzar que los .js se lean como JSX
         },
       },
+    },
+    // Configuración para pruebas
+    test: {
+      environment: 'jsdom',
+      globals: true,
+      setupFiles: './testSetup.js',
     },
   }
 })

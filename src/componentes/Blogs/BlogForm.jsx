@@ -1,4 +1,3 @@
-import React from 'react'
 import { useCampo } from '../../hooks/useCampo'
 import PropTypes from 'prop-types'
 

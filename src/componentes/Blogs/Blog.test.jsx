@@ -1,13 +1,31 @@
-import React from 'react'
-import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog.jsx'
+import { expect } from 'vitest'
+
+// Prueba para renderizar el titulo de un blog
+test('renderizar el titulo blog', () => {
+  const blog = {
+    titulo: 'Titulo a renderizar',
+    autor: 'Admin',
+    url: 'https://blog',
+    likes: 0
+  }
+
+  render(<Blog blog={blog} />)
+
+  screen.debug() // Mostrar en la consola
+
+  // Comprueba que el blog puede ser renderizado
+  const titulo = screen.getByText('Titulo a renderizar')
+  screen.debug(titulo)
+  expect(titulo).toBeDefined()
+})
 
 // Prueba que verifica que el titulo de un blog puede ser visto
 test('renderizar titulo y autor por defecto, y no la url y los likes', () => {
   const blog = {
-    titulo: 'Titulo a renderizar',
+    titulo: 'Titulo de prueba',
     autor: 'Admin',
     url: 'https://blog',
     likes: 0
@@ -44,6 +62,7 @@ test('la url y los likes se renderizan con el boton Mostrar Detalles', async () 
 
   // Simula el click en el boton
   const boton = screen.getByText('Mostrar Detalles')
+  screen.debug(boton)
   await usuario.click(boton)
 
   screen.debug() // Mostrar el html en la consola
@@ -63,7 +82,7 @@ test('si se hace click dos veces en el boton like, se llama dos veces al control
   }
 
   // Controlador de eventos
-  const mockHandler = jest.fn()
+  const mockHandler = vi.fn()
 
   const { container } = render(<Blog blog={blog} manejadorLikesChange={mockHandler}/>) // Renderizar el compononte
 
@@ -72,6 +91,7 @@ test('si se hace click dos veces en el boton like, se llama dos veces al control
 
   // Simula click en el boton mostrar detalles
   const mostrasDetallesBtn = screen.getByText('Mostrar Detalles')
+  screen.debug(mostrasDetallesBtn)
   await usuario.click(mostrasDetallesBtn)
 
   screen.debug() // Mostrar el html en la consola
@@ -82,6 +102,7 @@ test('si se hace click dos veces en el boton like, se llama dos veces al control
 
   // Busca el boton like
   const likeBtn = screen.getByText('Like')
+  screen.debug(likeBtn)
   await usuario.dblClick(likeBtn)
 
   // Comprobamos que el controlador de eventos fue llamado dos veces
