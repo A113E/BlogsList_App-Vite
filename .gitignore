@@ -4,10 +4,6 @@ npm-debug.log
 yarn.lock
 package-lock.json
 
-# environment
-.env
-.env.local
-.env.*.local
 
 # build outputs
 /build
