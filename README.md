@@ -1,2 +1,2 @@
-# BlogsList_App-Vite
-Aplicicion BlogsList con Vite
+# BlogsList_App-Webpack
+Aplicación de Blogs usando Webpack
