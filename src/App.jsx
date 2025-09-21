@@ -10,7 +10,7 @@ import LoginForm from './componentes/Login/LoginForm'
 import Togglable from './componentes/Rutas/Togglable'
 
 // Importar los servicios
-import { obtenerBlogs, like, crear, eliminar } from './servicios/blogServicio'
+import { obtenerBlogs, like, crear, eliminar, actualizar } from './servicios/blogServicio'
 import { login } from './servicios/login.js'
 import { cargarUsuario, eliminarUsuario, usuarioGuardado } from './servicios/storage.js'
 
@@ -66,14 +66,62 @@ const App = () => {
   // Función para añadir un blog
   const añadirBlog = async (blogObjeto) => {
     try {
+    // Oculta el formulario
       blogFormRef.current.toggleVisibilidad()
-      const blogCreado = await crear(blogObjeto)
-      // Agrega el nuevo blog al array
-      setBlogs((prevBlogs) => prevBlogs.concat(blogCreado))
-      mostrarNotificacion(`Blog ${blogCreado.titulo} añadido exitosamente por ${usuario.nombre_usuario}`, 'exito')
+
+      // Verifica que haya usuario con token
+      const usuarioStorage = cargarUsuario()
+      if (!usuarioStorage?.token) {
+        mostrarNotificacion('Debe iniciar sesión para añadir o actualizar un blog', 'error')
+        return
+      }
+
+      // Verificamos si el blog ya existe (por título)
+      const blogExiste = blogs.find(
+        blog => blog.titulo.trim().toLowerCase() === blogObjeto.titulo.trim().toLowerCase()
+      )
+
+      // Si el blog existe, preguntamos si desea reemplazarlo
+      if (blogExiste) {
+        if (window.confirm(`El blog "${blogExiste.titulo}" ya existe. ¿Desea reemplazarlo?`)) {
+          const blogActualizado = {
+            ...blogExiste,
+            autor: blogObjeto.autor,
+            url: blogObjeto.url,
+            likes: blogExiste.likes
+          }
+
+          try {
+            const blogActual = await actualizar(blogExiste.id, blogActualizado)
+            setBlogs(prevBlogs =>
+              prevBlogs.map(blog => (blog.id === blogExiste.id ? blogActual : blog))
+            )
+            mostrarNotificacion(
+              `Blog "${blogActual.titulo}" reemplazado por ${usuarioStorage.nombre_usuario}`,
+              'exito'
+            )
+          } catch (error) {
+            console.error('Error al actualizar blog:', error)
+            mostrarNotificacion('No se pudo actualizar el blog', 'error')
+          }
+        }
+      } else {
+      // Si no existe, creamos uno nuevo
+        try {
+          const blogCreado = await crear(blogObjeto)
+          setBlogs(prevBlogs => prevBlogs.concat(blogCreado))
+          mostrarNotificacion(
+            `Blog "${blogCreado.titulo}" añadido exitosamente por ${usuarioStorage.nombre_usuario}`,
+            'exito'
+          )
+        } catch (error) {
+          console.error('Error al crear blog:', error)
+          mostrarNotificacion('No se pudo crear el blog', 'error')
+        }
+      }
     } catch (error) {
-      console.error('Error al crear nuevo blog', error)
-      mostrarNotificacion('Error al añadir blog', 'error')
+      console.error('Error general en añadirBlog:', error)
+      mostrarNotificacion('Ocurrió un error al añadir el blog', 'error')
     }
   }
 
@@ -157,7 +205,7 @@ const App = () => {
         </div>
       }
       <br />
-      <BlogLista blogs={blogsFiltrados} manejadorLikesChange={manejadorLikesChange} onDelete={manejadorEliminarBlogs} />
+      <BlogLista blogs={blogsFiltrados} manejadorLikesChange={manejadorLikesChange} onDelete={manejadorEliminarBlogs} usuario={usuario}/>
       <br />
       <em className='footer'>Blog App. FullSack Course 2025</em>
     </div>

@@ -1,6 +1,6 @@
 import Blog from './Blog'
 
-const BlogLista = ({ blogs, manejadorLikesChange, onDelete }) => (
+const BlogLista = ({ blogs, manejadorLikesChange, onDelete, usuario }) => (
   <div>
     {blogs.map((blog) => (
       <Blog
@@ -8,6 +8,7 @@ const BlogLista = ({ blogs, manejadorLikesChange, onDelete }) => (
         blog={blog}
         manejadorLikesChange={manejadorLikesChange}
         onDelete={onDelete}
+        usuario={usuario}
       />
     ))}
   </div>

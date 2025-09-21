@@ -5,9 +5,15 @@ import { BACKEND_URL } from '../config'
 const baseUrl = `${BACKEND_URL}/blogs`
 
 // Autentificacion
-const obtenerConfit = () => ({
-  headers: { Authorization: `Bearer ${cargarUsuario().token}` }
-})
+const obtenerConfit = () => {
+  const usuario = cargarUsuario()
+  if (!usuario?.token) {
+    throw new Error('Usuario no autenticado') // evita hacer PUT sin token
+  }
+  return {
+    headers: { Authorization: `Bearer ${usuario.token}` }
+  }
+}
 
 // Servicio para obtener los blogs
 export const obtenerBlogs = () => {
@@ -20,11 +26,16 @@ export const like = id => {
 }
 
 // Servicio para crear un nuevo blog
-export const crear = nuevoBlog => {
-  return axios.post(baseUrl, nuevoBlog, obtenerConfit()).then(res => res.data)
+export const crear = blogObjeto => {
+  return axios.post(baseUrl, blogObjeto, obtenerConfit()).then(res => res.data)
 }
 
 // Servicio para elminar un blog
 export const eliminar = id => {
   return axios.delete(`${baseUrl}/${id}`, obtenerConfit()).then(res => res.data)
+}
+
+// Servicio para actualizar un blog
+export const actualizar = (id, blogActualizado) => {
+  return axios.put(`${baseUrl}/${id}`, blogActualizado, obtenerConfit()).then(res => res.data)
 }

@@ -1,14 +1,14 @@
 // vite.config.js
-// Modulos
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-// Configuracion
+// Configuración principal
 export default defineConfig(({ mode }) => {
   const enProd = mode === 'production'
 
-  const backend_url = enProd
+  // URL del backend según entorno
+  const BACKEND_URL = enProd
     ? 'https://blogslist-app-webpack.onrender.com/api'
     : 'http://localhost:3003/api'
 
@@ -16,7 +16,6 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     server: {
       port: 3000,
-      // Proxy para evitar CORS en dev
       proxy: {
         '/api': {
           target: 'http://localhost:3003',
@@ -29,21 +28,27 @@ export default defineConfig(({ mode }) => {
       outDir: 'build',
       sourcemap: true,
       rollupOptions: {
-        input: path.resolve(__dirname, 'index.html')
-      },
+        // Para producción usamos ruta relativa
+        input: 'index.html'
+      }
     },
     optimizeDeps: {
       esbuildOptions: {
         loader: {
-          '.js': 'jsx', // Forzar que los .js se lean como JSX
-        },
-      },
+          '.js': 'jsx'
+        }
+      }
     },
-    // Configuración para pruebas
     test: {
       environment: 'jsdom',
       globals: true,
-      setupFiles: './testSetup.js',
+      setupFiles: './testSetup.js'
     },
+    define: {
+      // Exportar la url del BACKEND
+      'import.meta.env.VITE_BACKEND_URL': JSON.stringify(BACKEND_URL)
+    }
   }
 })
+
+
