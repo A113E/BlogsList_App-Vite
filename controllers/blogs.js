@@ -28,17 +28,22 @@ blogsRouter.get('/:id', async (request, response) => {
 blogsRouter.delete('/:id', usuarioExtractor, async (request, response) => {
   const usuario = request.usuario
   const id = request.params.id
-   const blog = await Blog.findByIdAndDelete(id).populate('usuario', { nombre_usuario: 1, nombre: 1 }) // Solicitud request para obtener el parámetro id y eliminar
+   const blog = await Blog.findByIdAndDelete(id)
    if (!blog) {
     return response.status(404).json({ error: 'Blog no encontrado' })
    }
-   if (usuario.id.toString() !== blog.usuario.toString()) {
+
+   // Verifica que el usuario que eliminó es el mismo que creó el blog
+  if (blog.usuario.toString() !== usuario._id.toString()) {
     return response.status(403).json({ error: 'Usuario no autorizado' })
-   }
+  }
 
    usuario.blogs = usuario.blogs.filter(b => b.id.toString() !== blog.id.toString())
 
    await blog.deleteOne()
+   // También eliminamos el blog del array de blogs del usuario
+   usuario.blogs = usuario.blogs.filter(b => b.toString() !== id)
+   await usuario.save()
    response.status(204).end()
 })
 
@@ -77,12 +82,22 @@ blogsRouter.put('/:id', usuarioExtractor, async (request, response) => {
       return response.status(401).json({ error: 'Usuario no autenticado' })
     }
 
+  // Busca el blog a actualizar
+  const blog = await Blog.findById(id)
+  if (!blog) {
+    return response.status(404).json({ error: 'Blog no encontrado' })
+  }
+
+  // Verifica que el usuario que intenta actualizar es el mismo que creó el blog
+  if (blog.usuario.toString() !== usuario._id.toString()) {
+    return response.status(403).json({ error: 'Usuario no autorizado para actualizar este blog' })
+  }
+
   // Verificar si ya existe otro blog con el mismo título
   const blogExistente = await Blog.findOne({ titulo })
   if (blogExistente && blogExistente._id.toString() !== id) {
     return response.status(400).json({ error: 'Ya existe un blog con ese título' })
   }
-
 
   const blogActualizado = await Blog.findByIdAndUpdate(
     id,
