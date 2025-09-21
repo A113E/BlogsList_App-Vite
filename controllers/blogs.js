@@ -85,7 +85,7 @@ blogsRouter.put('/:id', usuarioExtractor, async (request, response) => {
   // Busca el blog a actualizar
   const blog = await Blog.findById(id)
   if (!blog) {
-    return response.status(404).json({ error: 'Blog no encontrado' })
+    return response.status(404).json({ error: 'Blog no encontrado en la base de datos' })
   }
 
   // Verifica que el usuario que intenta actualizar es el mismo que creó el blog
